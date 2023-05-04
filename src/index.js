@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import globalStyles from './globalStyles.module.css';
 import 'modern-normalize/modern-normalize.css';
 
 import App from './App';

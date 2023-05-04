@@ -39,7 +39,7 @@ const Profile = ({
 
 Profile.defaultProps = {
   avatar: defaultImage,
-  stats: 0,
+  stats: {},
 };
 
 Profile.propTypes = {

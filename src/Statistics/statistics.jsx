@@ -4,7 +4,6 @@ import styles from './statics.module.css';
 import PropTypes from 'prop-types';
 
 const Statistics = ({ stats, title }) => {
-  console.log(randomColor());
   return (
     <section className={styles.statistic__container}>
       {title.trim() !== false && <h2 className={styles.title}>{title}</h2>}

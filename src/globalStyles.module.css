@@ -1,0 +1,7 @@
+body {
+  background-color: rgba(171, 171, 171, 0.323);
+  font-size: 20px;
+  color: black;
+  text-shadow: 1px 1px 1px rgba(207, 29, 29, 0.763),
+    1px 1px 1px rgba(207, 29, 29, 0.763);
+}

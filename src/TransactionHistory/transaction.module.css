@@ -1,0 +1,29 @@
+.table {
+  @media screen and (min-width: 600px) {
+    min-width: 600px;
+  }
+  max-width: 600px;
+  margin: 15px auto;
+  padding: 0;
+
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid grey;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.374);
+  background-color: #ffff;
+}
+.headers {
+  height: 50px;
+  background-color: rgba(0, 119, 255, 0.607);
+}
+.item td {
+  height: 20px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid grey;
+  /* border-collapse: collapse; */
+}
+
+tr:nth-child(even) {
+  background-color: #7a7a7a3f;
+}
