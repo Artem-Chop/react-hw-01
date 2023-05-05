@@ -8,13 +8,12 @@ const Friends = ({ friends }) => {
     <section className={styles.container}>
       <ul className={styles.list}>
         {friends.map(friend => (
-          <li key={friend.id} className={styles.item}>
-            <Friend
-              name={friend.name}
-              isOnline={friend.isOnline}
-              avatar={friend.avatar}
-            />
-          </li>
+          <Friend
+            key={friend.id}
+            name={friend.name}
+            isOnline={friend.isOnline}
+            avatar={friend.avatar}
+          />
         ))}
       </ul>
     </section>

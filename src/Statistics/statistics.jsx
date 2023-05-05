@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const Statistics = ({ stats, title }) => {
   return (
     <section className={styles.statistic__container}>
-      {title.trim() !== false && <h2 className={styles.title}>{title}</h2>}
+      {title.trim() && <h2 className={styles.title}>{title}</h2>}
       <ul className={styles.stat__list}>
         {stats.map(stat => (
           <li

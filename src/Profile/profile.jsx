@@ -10,6 +10,11 @@ const Profile = ({
   location,
   stats: { followers, views, likes },
 }) => {
+  const statsView = [
+    { label: 'Followers', data: followers },
+    { label: 'Views', data: views },
+    { label: 'Likes', data: likes },
+  ];
   return (
     <div className={styles.userCard}>
       <div className={styles.main__info}>
@@ -20,18 +25,12 @@ const Profile = ({
       </div>
 
       <ul className={styles.stats__list}>
-        <li className={styles.stats__list__item}>
-          <span>Followers</span>
-          <span>{followers}</span>
-        </li>
-        <li className={styles.stats__list__item}>
-          <span>Views</span>
-          <span>{views}</span>
-        </li>
-        <li className={styles.stats__list__item}>
-          <span>Likes</span>
-          <span>{likes}</span>
-        </li>
+        {statsView.map(content => (
+          <li className={styles.stats__list__item} key={content.label}>
+            <span>{content.label}</span>
+            <span>{content.data}</span>
+          </li>
+        ))}
       </ul>
     </div>
   );

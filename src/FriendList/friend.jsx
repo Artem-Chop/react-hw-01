@@ -5,12 +5,12 @@ import defaultImage from '../components/lev-v-koroni-vk-beze-380x380.jpg';
 
 const Friend = ({ name, isOnline, avatar }) => {
   return (
-    <>
-      {isOnline === false && <span className={styles.indicatorOn}></span>}
-      {isOnline === true && <span className={styles.indicatorOff}></span>}
+    <li className={styles.item}>
+      {isOnline === false && <span className={styles.indicatorOn} />}
+      {isOnline === true && <span className={styles.indicatorOff} />}
       <img src={avatar} alt="User avatar" width="48" className={styles.img} />
       <p className={styles.name}>{name}</p>
-    </>
+    </li>
   );
 };
 

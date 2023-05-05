@@ -1,7 +1,29 @@
 body {
-  background-color: rgba(171, 171, 171, 0.323);
+  /* background-color: rgba(171, 171, 171, 0.323); */
   font-size: 20px;
   color: black;
   text-shadow: 1px 1px 1px rgba(207, 29, 29, 0.763),
     1px 1px 1px rgba(207, 29, 29, 0.763);
+  background: linear-gradient(rgb(255, 0, 0), rgb(0, 34, 255));
+  /* background: linear-gradient(
+    150deg,
+    rgb(22, 249, 1) 0%,
+    rgba(106, 57, 175, 1) 42%,
+    rgb(234, 31, 4) 72%,
+    rgb(211, 239, 5) 100%
+  );
+  animation: gradient 10s infinite linear;
+  background-size: 400%; */
 }
+
+/* @keyframes gradient {
+  0% {
+    background-position: 80% 0%;
+  }
+  50% {
+    background-position: 20% 100%;
+  }
+  100% {
+    background-position: 80% 0%;
+  }
+} */
