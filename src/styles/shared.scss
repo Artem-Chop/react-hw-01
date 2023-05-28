@@ -3,24 +3,4 @@ body {
   font-size: 20px;
   color: black;
   text-shadow: 1px 1px 1px #700b14, 1px 1px 1px #700b14;
-
-  .btn {
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid transparent;
-    border-radius: 30%;
-    background-color: rgba(99, 50, 50, 0.536);
-    box-shadow: 0 4px #700b14;
-    color: inherit;
-    text-shadow: inherit;
-    &:hover {
-      background-color: #ca5d83;
-      color: white;
-    }
-    &:active {
-      background-color: #ca5d83;
-      box-shadow: 0 2px #666;
-      transform: translateY(3px);
-    }
-  }
 }
