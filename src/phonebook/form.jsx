@@ -20,7 +20,6 @@ class Form extends React.Component {
     const Number = this.state.number;
     const info = { Name, Number };
     this.props.OnSubmit(info);
-    console.log(this.state);
     this.reset();
   };
   reset = () => {

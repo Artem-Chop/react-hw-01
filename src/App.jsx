@@ -15,6 +15,25 @@ class App extends React.Component {
     ],
     filter: '',
   };
+  componentDidMount(prevProps, prevState) {
+    console.log('mount');
+    const contacts = localStorage.getItem('contactList');
+    console.log(contacts);
+    const parcedContacts = JSON.parse(contacts);
+
+    this.setState({ contacts: parcedContacts });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('upd');
+
+    console.log(prevState);
+    console.log(this.state);
+
+    if (this.state.contacts !== prevState.contacts) {
+      console.log('вот оно');
+      localStorage.setItem('contactList', JSON.stringify(this.state.contacts));
+    }
+  }
 
   deleteContact = contactId => {
     this.setState(prevState => ({
