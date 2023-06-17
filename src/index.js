@@ -2,11 +2,16 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import 'modern-normalize/modern-normalize.css';
 import globalStyles from './styles/shared.scss';
-
+import store from 'redux/store';
+import { Provider } from 'react-redux';
 import App from './App';
+
+console.log(store.getState());
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
