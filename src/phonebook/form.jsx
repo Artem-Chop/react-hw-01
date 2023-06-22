@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './contacts.module.scss';
+import { connect } from 'react-redux';
+import { addContact } from '../redux/actions';
 
 class Form extends React.Component {
   constructor() {
@@ -14,12 +16,11 @@ class Form extends React.Component {
     this.setState({ [name]: value });
     // this.setState({ name: e.currentTarget.value });
   };
+
   handleSubmit = e => {
     e.preventDefault();
-    const Name = this.state.name;
-    const Number = this.state.number;
-    const info = { Name, Number };
-    this.props.OnSubmit(info);
+    const { name, number } = this.state;
+    this.props.OnSubmit({ name, number });
     this.reset();
   };
   reset = () => {
@@ -63,4 +64,9 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+// const mapStateToProps = state => {};
+const mapDispatchToProps = dispatch => ({
+  OnSubmit: contact => dispatch(addContact(contact)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);

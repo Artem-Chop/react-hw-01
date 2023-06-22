@@ -2,7 +2,7 @@ import React from 'react';
 import Form from './form';
 import ContactList from './contactList';
 import { nanoid } from 'nanoid';
-import Filter from './filter';
+import Filter from './Filter';
 import styles from './contacts.module.scss';
 
 class NumberList extends React.Component {
