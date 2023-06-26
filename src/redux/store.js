@@ -20,7 +20,7 @@ import { changeFilter } from './actions';
 // import mainSlice from './slice';
 
 const contactsReducer = createReducer([], builder => {
-  builder.addCase(fetchContactsSuccess, (state, { payload }) => {
+  builder.addCase(fetchContactsSuccess, (_, { payload }) => {
     return payload;
   });
   builder.addCase(addContactSuccess, (state, { payload }) => {
@@ -32,7 +32,7 @@ const contactsReducer = createReducer([], builder => {
 });
 
 const filterReducer = createReducer('', builder => {
-  builder.addCase(changeFilter, (state, { payload }) => {
+  builder.addCase(changeFilter, (_, { payload }) => {
     return payload;
   });
 });

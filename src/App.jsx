@@ -7,8 +7,7 @@ import { getIsLoading } from './redux/selectors';
 
 import Form from './phonebook/form';
 import ContactList from './phonebook/contactList';
-import Filter from './phonebook/Filter';
-import { contactsSlice } from './redux/store';
+import Filter from './phonebook/filter';
 
 class App extends React.Component {
   componentDidMount() {
