@@ -1,7 +1,14 @@
 import React from 'react';
 import styles from './contacts.module.scss';
 import { connect } from 'react-redux';
-import { addContact } from '../redux/actions';
+import { addContact } from '../redux/operations';
+
+// import {
+//   fetchContacts,
+//   addContact,
+//   deleteContact,
+//   filtr,
+// } from '../redux/slice';
 
 class Form extends React.Component {
   constructor() {

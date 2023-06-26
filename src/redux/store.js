@@ -1,65 +1,65 @@
 import {
+  createAction,
   configureStore,
-  createReducer,
   combineReducers,
-  getDefaultMiddleware,
+  createReducer,
 } from '@reduxjs/toolkit';
 import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import * as actions from './actions';
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+} from './actions';
+import { changeFilter } from './actions';
 
-const persistConfig = {
-  key: 'Contacts',
-  storage,
-  whitelist: ['contacts'],
-};
-const initialContactsState = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+// import mainSlice from './slice';
 
-const contactsReducer = createReducer(initialContactsState, {
-  [actions.addContact]: (state, { payload }) => {
-    return [payload, ...state];
-  },
-  [actions.deleteContact]: (state, { payload }) => {
-    return state.filter(contact => contact.id !== payload);
-  },
-});
-const filterReducer = createReducer('', {
-  [actions.changeFilter]: (state, { payload }) => {
+const contactsReducer = createReducer([], builder => {
+  builder.addCase(fetchContactsSuccess, (state, { payload }) => {
     return payload;
-  },
+  });
+  builder.addCase(addContactSuccess, (state, { payload }) => {
+    return [...state, payload];
+  });
+  builder.addCase(deleteContactSuccess, (state, { payload }) => {
+    return state.filter(contact => contact.id !== payload);
+  });
+});
+
+const filterReducer = createReducer('', builder => {
+  builder.addCase(changeFilter, (state, { payload }) => {
+    return payload;
+  });
+});
+
+const loadingReducer = createReducer(false, builder => {
+  builder.addCase(fetchContactsRequest, () => true);
+  builder.addCase(fetchContactsSuccess, () => false);
+  builder.addCase(fetchContactsError, () => false);
+
+  builder.addCase(addContactRequest, () => true);
+  builder.addCase(addContactSuccess, () => false);
+  builder.addCase(addContactError, () => false);
+
+  builder.addCase(deleteContactRequest, () => true);
+  builder.addCase(deleteContactSuccess, () => false);
+  builder.addCase(deleteContactError, () => false);
 });
 
 const rootReducer = combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
+  loading: loadingReducer,
 });
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV === 'development',
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
 });
 
-const persistor = persistStore(store);
-
-export default { store, persistor };
+export default store;
