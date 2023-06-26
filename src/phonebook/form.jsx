@@ -73,7 +73,7 @@ class Form extends React.Component {
 
 // const mapStateToProps = state => {};
 const mapDispatchToProps = dispatch => ({
-  OnSubmit: contact => dispatch(addContact(contact)),
+  OnSubmit: contact => dispatch(this.props.add(contact)),
 });
 
 export default connect(null, mapDispatchToProps)(Form);

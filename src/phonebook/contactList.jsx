@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './contacts.module.scss';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { deleteContact } from '../redux/operations';
 import { getVisibleContacts } from '../redux/selectors';
 
@@ -11,19 +11,22 @@ import { getVisibleContacts } from '../redux/selectors';
 //   filtr,
 // } from '../redux/slice';
 
-const ContactList = ({ contacts, OnDeleteContact }) => (
-  <ul className={styles.contacts_list}>
-    {contacts.map(({ id, name, number }) => (
-      <li key={id} className={styles.contacts_list_item}>
-        <p>{name}</p>
-        <p>{number}</p>
-        <button onClick={() => OnDeleteContact(id)} className={styles.btn}>
-          Delete
-        </button>
-      </li>
-    ))}
-  </ul>
-);
+const ContactList = ({ contacts, OnDeleteContact }) => {
+  return (
+    <ul className={styles.contacts_list}>
+      {contacts.map(({ id, name, number }) => (
+        <li key={id} className={styles.contacts_list_item}>
+          <p>{name}</p>
+          <p>{number}</p>
+          <button onClick={() => OnDeleteContact(id)} className={styles.btn}>
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const mapStateToProps = state => ({
   contacts: getVisibleContacts(state),
 });
