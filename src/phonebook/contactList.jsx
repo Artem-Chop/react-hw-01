@@ -1,24 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './contacts.module.scss';
-import { connect, useDispatch } from 'react-redux';
-import { deleteContact } from '../redux/operations';
-import { getVisibleContacts } from '../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../redux/contacts/operations';
+import { getVisibleContacts } from '../redux/contacts/selectors';
+import { connect } from 'react-redux';
 
-// import {
-//   fetchContacts,
-//   addContact,
-//   deleteContact,
-//   filtr,
-// } from '../redux/slice';
+const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getVisibleContacts);
 
-const ContactList = ({ contacts, OnDeleteContact }) => {
+  if (!contacts) {
+    return <div>Не удалось найти контакты</div>;
+  }
   return (
     <ul className={styles.contacts_list}>
       {contacts.map(({ id, name, number }) => (
         <li key={id} className={styles.contacts_list_item}>
           <p>{name}</p>
           <p>{number}</p>
-          <button onClick={() => OnDeleteContact(id)} className={styles.btn}>
+          <button
+            onClick={() => dispatch(deleteContact(id))}
+            className={styles.btn}
+          >
             Delete
           </button>
         </li>
@@ -27,12 +30,4 @@ const ContactList = ({ contacts, OnDeleteContact }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  contacts: getVisibleContacts(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  OnDeleteContact: id => dispatch(deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+export default ContactList;

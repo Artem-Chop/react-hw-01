@@ -1,42 +1,49 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import styles from './phonebook/contacts.module.scss';
+import React, { Component, lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import { getContacts, addContact } from './redux/operations';
+import AppBar from 'UserMenu/AppBar';
+// import HomePage from './views/HomeView';
+import Phonebook from 'views/PhonebookView';
+import Registration from 'views/RegistrationView';
+import Login from 'views/LoginView';
+import NotFound from './views/NotFound';
+import { getUser } from 'redux/auth/operations';
+import routes from './servises/routes';
+import { connect } from 'react-redux';
+import UnauthorizedRoute from './servises/UnauthorizedRoute';
+import AuthorizedRoute from 'servises/authorizedRoute';
 
-import Form from './phonebook/form';
-import ContactList from './phonebook/contactList';
-import Filter from './phonebook/Filter';
+const HomePage = lazy(() => import('./views/HomeView'));
 
-function App() {
-  const { IsLoading } = useSelector(state => state.IsLoading);
+class App extends Component {
+  componentDidMount() {
+    this.props.onGetUser();
+  }
+  render() {
+    return (
+      <div>
+        <AppBar />
+        <Suspense fallback={<p>Загружаем</p>}>
+          <Routes>
+            <Route path={routes.home} element={<HomePage />} />
+            <Route element={<UnauthorizedRoute />}>
+              <Route path={routes.phonebook} element={<Phonebook />} />
+            </Route>
+            <Route element={<AuthorizedRoute />}>
+              <Route path={routes.registration} element={<Registration />} />
+              <Route path={routes.login} element={<Login />} />
+            </Route>
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getContacts());
-  }, []);
-
-  const addUseEffect = useEffect(() => {
-    dispatch(addContact());
-  }, []);
-
-  return (
-    <div className={styles.form_container}>
-      <Form add={addUseEffect} />
-
-      <div className={styles.contacts_container}>
-        <h2>Contacts</h2>
-        <Filter />
-        {IsLoading && (
-          <div className={styles.spinner_container}>
-            <p>Loading...</p>
-            <div className={styles.spinner}></div>
-          </div>
-        )}
-        <ContactList />
+            <Route path={routes.notFound} element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapDispatchToProps = {
+  onGetUser: getUser,
+};
+
+export default connect(null, mapDispatchToProps)(App);
