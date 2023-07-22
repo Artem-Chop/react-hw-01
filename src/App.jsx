@@ -1,49 +1,49 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import AppBar from 'UserMenu/AppBar';
-// import HomePage from './views/HomeView';
-import Phonebook from 'views/PhonebookView';
-import Registration from 'views/RegistrationView';
-import Login from 'views/LoginView';
-import NotFound from './views/NotFound';
-import { getUser } from 'redux/auth/operations';
+
+import Phonebook from 'phonebookComponents/PhonebookView';
+import Feedbaks from 'feedBacksComponents/FeedBacksView';
+import ImageGallery from 'imageFinder/ImageGalleryView';
+import Registration from 'generalViews/RegistrationView';
+import Login from 'generalViews/LoginView';
+import NotFound from './generalViews/NotFound';
+import { getUser } from 'redux/auth/authOperations';
 import routes from './servises/routes';
-import { connect } from 'react-redux';
+
 import UnauthorizedRoute from './servises/UnauthorizedRoute';
-import AuthorizedRoute from 'servises/authorizedRoute';
+import AuthorizedRoute from 'servises/AuthorizedRoute';
+import { Box } from '@chakra-ui/react';
 
-const HomePage = lazy(() => import('./views/HomeView'));
+const HomePage = lazy(() => import('./generalViews/HomeView'));
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onGetUser();
-  }
-  render() {
-    return (
-      <div>
-        <AppBar />
-        <Suspense fallback={<p>Загружаем</p>}>
-          <Routes>
-            <Route path={routes.home} element={<HomePage />} />
-            <Route element={<UnauthorizedRoute />}>
-              <Route path={routes.phonebook} element={<Phonebook />} />
-            </Route>
-            <Route element={<AuthorizedRoute />}>
-              <Route path={routes.registration} element={<Registration />} />
-              <Route path={routes.login} element={<Login />} />
-            </Route>
+export default function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
-            <Route path={routes.notFound} element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </div>
-    );
-  }
+  return (
+    <Box>
+      <AppBar />
+      <Suspense fallback={<p>Загружаем...</p>}>
+        <Routes>
+          <Route path={routes.home} element={<HomePage />} />
+          <Route element={<AuthorizedRoute />}>
+            <Route path={routes.phonebook} element={<Phonebook />} />
+            <Route path={routes.feedbacks} element={<Feedbaks />} />
+            <Route path={routes.gallary} element={<ImageGallery />} />
+          </Route>
+          <Route element={<UnauthorizedRoute />}>
+            <Route path={routes.registration} element={<Registration />} />
+            <Route path={routes.login} element={<Login />} />
+          </Route>
+
+          <Route path={routes.notFound} element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </Box>
+  );
 }
-
-const mapDispatchToProps = {
-  onGetUser: getUser,
-};
-
-export default connect(null, mapDispatchToProps)(App);

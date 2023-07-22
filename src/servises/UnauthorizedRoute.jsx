@@ -1,15 +1,10 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getIsAuth } from 'redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
+import { getIsAuth } from 'redux/auth/authSelectors';
 import routes from './routes';
 
-const UnauthorizedRoute = ({ isAuthenticated }) => {
-  return isAuthenticated ? <Outlet /> : <Navigate to={routes.login} />;
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuth(state),
-});
-
-export default connect(mapStateToProps)(UnauthorizedRoute);
+export default function UnauthorizedRoute() {
+  const isAuthenticated = useSelector(getIsAuth);
+  return isAuthenticated ? <Navigate to={routes.phonebook} /> : <Outlet />;
+}

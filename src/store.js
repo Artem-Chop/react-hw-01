@@ -3,8 +3,9 @@ import {
   configureStore,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
-import mainSlice from './phonebookSlice';
+import mainSlice from './redux/contacts/PhonebookSlice';
 import UserSlice from 'redux/auth/UserSlice';
+import gallarySlice from 'redux/gallary/gallarySlice';
 
 import {
   persistStore,
@@ -27,6 +28,7 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
   contactReducer: mainSlice,
   userReducer: persistReducer(authPersistConfig, UserSlice),
+  gallaryReducer: gallarySlice,
 });
 
 const store = configureStore({

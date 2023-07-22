@@ -1,37 +1,63 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import routes from 'servises/routes';
-import { connect } from 'react-redux';
-import { getIsAuth } from 'redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
+import { getIsAuth } from 'redux/auth/authSelectors';
 
-const Navigation = ({ isAuthenticated }) => {
+import { Button, Flex } from '@chakra-ui/react';
+// import { usual, active } from 'linksStyle/linkStyle';
+
+export default function Navigation() {
+  const isAuthenticated = useSelector(getIsAuth);
+  const navigate = useNavigate();
   return (
-    <nav className="nav_container">
-      <ul>
-        <li className="nav_link">
-          <NavLink
-            to={routes.home}
-            className={({ isActive }) => (isActive ? 'active' : 'default')}
+    <Flex>
+      {isAuthenticated ? (
+        <Flex as="ul" gap="10px">
+          <Button
+            onClick={() => {
+              navigate(routes.home);
+            }}
           >
             Home
-          </NavLink>
-        </li>
-        {isAuthenticated && (
-          <li className="nav_link">
-            <NavLink
-              to={routes.phonebook}
-              className={({ isActive }) => (isActive ? 'active' : 'default')}
+          </Button>
+
+          <Button
+            onClick={() => {
+              navigate(routes.phonebook);
+            }}
+          >
+            Phonebook
+          </Button>
+
+          <Button>
+            <Button
+              onClick={() => {
+                navigate(routes.feedbacks);
+              }}
             >
-              Phonebook
-            </NavLink>
-          </li>
-        )}
-      </ul>
-    </nav>
+              Feedbacks
+            </Button>
+          </Button>
+
+          <Button
+            onClick={() => {
+              navigate(routes.gallary);
+            }}
+          >
+            Gallary
+          </Button>
+        </Flex>
+      ) : (
+        <Flex as="ul">
+          <Button
+            onClick={() => {
+              navigate(routes.home);
+            }}
+          >
+            Home
+          </Button>
+        </Flex>
+      )}
+    </Flex>
   );
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuth(state),
-});
-
-export default connect(mapStateToProps)(Navigation);
+}

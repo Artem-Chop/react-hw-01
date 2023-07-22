@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registration, login, logout, getUser } from './operations';
+import { registration, login, logout, getUser } from './authOperations';
 
 // Зареганые
+// asd@rambler.ru asdfghj
 // a@rambler.ru asdfghj
 // qwert@rambler.ru
 // qwer@rambler.ru
@@ -22,7 +23,6 @@ const UserSlice = createSlice({
     builder
 
       .addCase(registration.fulfilled, (state, { payload }) => {
-        
         state.user = payload.user;
         state.token = payload.token;
         state.isUserAuthenticated = true;
@@ -33,7 +33,6 @@ const UserSlice = createSlice({
       })
 
       .addCase(login.fulfilled, (state, { payload }) => {
-        
         state.user = payload.user;
         state.token = payload.token;
         state.isUserAuthenticated = true;

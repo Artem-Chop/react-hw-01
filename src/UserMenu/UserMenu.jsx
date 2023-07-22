@@ -1,27 +1,24 @@
-import { connect } from 'react-redux';
-import { getName } from 'redux/auth/auth-selectors';
-import defaultAvatar from './default-avatar.jpg';
-import { logout } from 'redux/auth/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { getName } from 'redux/auth/authSelectors';
+import defaultAvatar from './defaultAvatar.jpg';
+import { logout } from 'redux/auth/authOperations';
+import { clear } from 'redux/gallary/gallarySlice';
+import { Avatar, Text, Flex, Button } from '@chakra-ui/react';
 
-const UserMenu = ({ name, avatar, OnLogout }) => {
+export default function UserMenu() {
+  const name = useSelector(getName);
+  const dispatch = useDispatch();
+  const OnLogout = () => {
+    dispatch(logout());
+    clear();
+  };
   return (
-    <div className="userCorner">
-      <span>Welcome, {name}</span>
-      <img className="avatar" src={avatar} alt="" />
-      <button type="button" onClick={OnLogout}>
+    <Flex alignItems="center" gap="10px">
+      <Text>Welcome, {name}</Text>
+      <Avatar className="avatar" src={defaultAvatar} alt="" />
+      <Button type="button" onClick={OnLogout}>
         Logout
-      </button>
-    </div>
+      </Button>
+    </Flex>
   );
-};
-
-const mapStateToProps = state => ({
-  name: getName(state),
-  avatar: defaultAvatar,
-});
-
-const mapDispatchToProps = {
-  OnLogout: logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+}

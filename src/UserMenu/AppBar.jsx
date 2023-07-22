@@ -1,20 +1,21 @@
+import { Flex } from '@chakra-ui/react';
 import Navigation from './Navigation';
-import AuthNav from './AuthNav';
+import UnauthNav from './UnauthNav';
 import UserMenu from './UserMenu';
-import { connect } from 'react-redux';
-import { getIsAuth } from 'redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
+import { getIsAuth } from 'redux/auth/authSelectors';
 
-const AppBar = ({ isAuthenticated }) => {
+export default function AppBar() {
+  const isAuthenticated = useSelector(getIsAuth);
   return (
-    <header className="menu">
+    <Flex
+      justifyContent="space-between"
+      bgColor="teal"
+      p="10px"
+      alignItems="center"
+    >
       <Navigation />
-      {isAuthenticated ? <UserMenu /> : <AuthNav />}
-    </header>
+      {isAuthenticated ? <UserMenu /> : <UnauthNav />}
+    </Flex>
   );
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuth(state),
-});
-
-export default connect(mapStateToProps)(AppBar);
+}
